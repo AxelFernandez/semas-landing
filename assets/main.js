@@ -116,23 +116,48 @@
 
     function update() {
       const { step, max } = metrics();
-      index = Math.min(index, max);
+      index = Math.max(0, Math.min(index, max));
       track.style.transform = 'translateX(' + (-index * step) + 'px)';
       if (prev) prev.disabled = index <= 0;
       if (next) next.disabled = index >= max;
       if (prog) prog.style.width = (max === 0 ? 100 : ((index / max) * 100)) + '%';
     }
-    if (prev) prev.addEventListener('click', () => { index--; update(); });
-    if (next) next.addEventListener('click', () => { index++; update(); });
+
+    const nextSlide = () => {
+      const { max } = metrics();
+      index = index >= max ? 0 : index + 1;
+      update();
+    };
+
+    let autoplay = null;
+    const startAutoplay = () => {
+      if (autoplay) return;
+      autoplay = setInterval(nextSlide, 3200);
+    };
+    const stopAutoplay = () => {
+      clearInterval(autoplay);
+      autoplay = null;
+    };
+    const restartAutoplay = () => {
+      stopAutoplay();
+      startAutoplay();
+    };
+
+    if (prev) prev.addEventListener('click', () => { index--; update(); restartAutoplay(); });
+    if (next) next.addEventListener('click', () => { index++; update(); restartAutoplay(); });
+    track.parentElement.addEventListener('mouseenter', stopAutoplay);
+    track.parentElement.addEventListener('mouseleave', startAutoplay);
     window.addEventListener('resize', update);
     update();
+    startAutoplay();
 
     /* swipe */
     let sx = 0;
-    track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; stopAutoplay(); }, { passive: true });
     track.addEventListener('touchend', e => {
       const dx = e.changedTouches[0].clientX - sx;
       if (Math.abs(dx) > 50) { index += dx < 0 ? 1 : -1; update(); }
+      startAutoplay();
     }, { passive: true });
   }
 })();
