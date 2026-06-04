@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Se + · Consultoría en 360°</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+/* ============ HERO ============ */
+.hero{ position:relative; height:100svh; min-height:620px; display:flex; align-items:flex-end; overflow:hidden; color:#fff; }
+.hero__media{ position:absolute; inset:0; background:var(--navy-deep); z-index:0; }
+.hero__video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+.hero__media::after{ /* navy tint + subtle texture sobre el video */
+  content:""; position:absolute; inset:0; z-index:2;
+  background-color:rgba(16,39,64,.28);
+  background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 2px, transparent 2px 20px);
+}
+.hero__orb{ position:absolute; border-radius:50%; filter:blur(60px); opacity:.55; z-index:1; mix-blend-mode:screen; }
+.orb1{ width:60vw; height:60vw; background:radial-gradient(circle,#2d5a85,transparent 65%); top:-18vw; left:-12vw; animation:drift1 22s var(--ease) infinite alternate; }
+.orb2{ width:48vw; height:48vw; background:radial-gradient(circle,#3e76a8,transparent 62%); bottom:-16vw; right:-8vw; animation:drift2 27s var(--ease) infinite alternate; }
+.orb3{ width:30vw; height:30vw; background:radial-gradient(circle,#E8722A,transparent 60%); top:32%; right:24%; opacity:.32; animation:drift3 19s var(--ease) infinite alternate; }
+@keyframes drift1{ to{ transform:translate(10vw,8vw) scale(1.15); } }
+@keyframes drift2{ to{ transform:translate(-9vw,-6vw) scale(1.1); } }
+@keyframes drift3{ to{ transform:translate(-6vw,5vw) scale(1.25); } }
+.hero__grad{ position:absolute; inset:0; z-index:3; background:linear-gradient(180deg, rgba(16,39,64,.55) 0%, rgba(16,39,64,.05) 32%, rgba(16,39,64,.35) 70%, rgba(16,39,64,.9) 100%); }
+.hero__vidtag{ position:absolute; bottom:34px; right:var(--pad); z-index:4; max-width:300px; }
+.hero__vidtag .ph__tag{ text-align:left; }
+@media (max-width:920px){ .hero__vidtag{ display:none; } }
+.hero__inner{ position:relative; z-index:6; width:100%; padding-bottom:clamp(48px,8vh,110px); }
+.hero h1{ max-width:16ch; margin:18px 0 0; }
+.hero h1 em{ font-style:normal; color:var(--gold-soft); }
+.hero__sub{ max-width:46ch; margin-top:22px; font-size:clamp(17px,1.5vw,21px); color:rgba(255,255,255,.82); line-height:1.6; }
+.hero__cta{ display:flex; gap:14px; flex-wrap:wrap; margin-top:34px; }
+.hero__scroll{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:6; display:flex; flex-direction:column; align-items:center; gap:8px; font-size:11px; letter-spacing:.25em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.hero__scroll .line{ width:1px; height:42px; background:linear-gradient(rgba(255,255,255,.7),transparent); animation:scrolly 2.2s var(--ease) infinite; transform-origin:top; }
+@keyframes scrolly{ 0%{ transform:scaleY(0); } 40%{ transform:scaleY(1);} 100%{ transform:scaleY(0); transform-origin:bottom; } }
+
+/* ============ Generic section ============ */
+.section{ padding:clamp(80px,12vh,150px) 0; position:relative; }
+.section__head{ max-width:760px; }
+.section__head .lead{ margin-top:20px; }
+
+/* ============ FUNDAMENTOS (dark, full-bleed) ============ */
+.fund{ background:var(--navy-deep); color:#fff; position:relative; overflow:hidden; }
+.fund__bg{ position:absolute; inset:0; z-index:0; }
+.fund__bg img{ width:100%; height:100%; object-fit:cover; }
+.fund::before{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(115deg, rgba(16,39,64,.93) 30%, rgba(16,39,64,.78) 100%); }
+.fund .wrap{ position:relative; z-index:2; }
+.fund .eyebrow{ color:var(--gold); }
+.fund h2{ color:#fff; max-width:18ch; }
+.fund__grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:2px 46px; margin-top:56px; }
+.reason{ display:grid; grid-template-columns:auto 1fr; gap:18px; padding:22px 0; border-top:1px solid rgba(255,255,255,.13); align-items:start; }
+.reason__n{ font-size:13px; font-weight:700; color:var(--gold); font-variant-numeric:tabular-nums; padding-top:3px; letter-spacing:.05em; }
+.reason__t{ font-size:clamp(16px,1.25vw,19px); color:rgba(255,255,255,.9); line-height:1.5; font-weight:500; }
+@media (max-width:760px){ .fund__grid{ grid-template-columns:1fr; gap:0; } }
+
+/* ============ CÓMO GESTIONAMOS (split) ============ */
+.gestion{ background:var(--white); }
+.split{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(34px,5vw,80px); align-items:center; }
+.split__media{ position:relative; }
+.split__media .ph{ width:100%; aspect-ratio:4/5; border-radius:4px; }
+.split__media img{ width:100%; height:auto; border-radius:6px; display:block; box-shadow:0 40px 80px -40px rgba(16,39,64,.5); }
+.split__media.tall .ph{ aspect-ratio:3/4; }
+.gestion .float-num{ position:absolute; right:-10px; bottom:-26px; font-size:clamp(80px,12vw,180px); font-weight:800; color:var(--cream-2); letter-spacing:-.05em; z-index:-1; line-height:.8; }
+@media (max-width:860px){ .split{ grid-template-columns:1fr; } .split--rev .split__media{ order:-1; } }
+
+/* ============ PROPUESTA DE VALOR (cards expandibles) ============ */
+.value{ background:var(--cream); }
+.pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:54px; }
+.pillar{
+  background:var(--white); border:1px solid var(--line); border-radius:14px; padding:34px 30px;
+  text-align:left; transition:.45s var(--ease); position:relative; overflow:hidden; display:flex; flex-direction:column;
+}
+.pillar:hover{ transform:translateY(-6px); box-shadow:0 30px 60px -34px rgba(16,39,64,.4); border-color:transparent; }
+.pillar__ico{ width:54px; height:54px; border-radius:12px; background:var(--cream); display:flex; align-items:center; justify-content:center; color:var(--navy); margin-bottom:24px; transition:.45s var(--ease); }
+.pillar:hover .pillar__ico{ background:var(--navy); color:#fff; }
+.pillar.active .pillar__ico{ background:var(--gold); color:#fff; }
+.pillar__ico svg{ width:26px; height:26px; }
+.pillar__step{ font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); }
+.pillar h3{ font-size:24px; margin:8px 0 12px; }
+.pillar__excerpt{ font-size:15px; color:var(--muted); line-height:1.6; }
+.pillar__more{ margin-top:22px; display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:600; letter-spacing:.05em; color:var(--navy); }
+.pillar__more .ico{ transition:transform .4s var(--ease); }
+.pillar.active .pillar__more .ico{ transform:rotate(45deg); }
+.pillar__panel{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .55s var(--ease); }
+.pillar.active .pillar__panel{ grid-template-rows:1fr; }
+.pillar__panel > div{ overflow:hidden; }
+.pillar__panel p{ font-size:15px; line-height:1.7; color:var(--ink-soft); padding-top:20px; margin-top:20px; border-top:1px solid var(--line); }
+.pillar__panel .note{ display:block; margin-top:14px; font-size:13px; color:var(--muted); font-style:italic; }
+@media (max-width:860px){ .pillars{ grid-template-columns:1fr; } }
+
+/* ============ SERVICIOS COMPLEMENTARIOS (acordeón) ============ */
+.compl{ background:var(--white); }
+.acc{ margin-top:50px; border-top:1px solid var(--line); }
+.acc__item{ border-bottom:1px solid var(--line); }
+.acc__head{ width:100%; display:flex; align-items:center; gap:24px; padding:26px 4px; text-align:left; transition:.3s; }
+.acc__head:hover{ padding-left:14px; }
+.acc__n{ font-size:13px; font-weight:700; color:var(--gold); font-variant-numeric:tabular-nums; width:34px; flex:none; }
+.acc__t{ flex:1; font-size:clamp(20px,2.4vw,30px); font-weight:700; letter-spacing:-.02em; transition:color .3s; }
+.acc__item.open .acc__t{ color:var(--navy); }
+.acc__plus{ width:38px; height:38px; flex:none; border-radius:50%; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; position:relative; transition:.4s var(--ease); }
+.acc__item.open .acc__plus{ background:var(--navy); border-color:var(--navy); }
+.acc__plus::before,.acc__plus::after{ content:""; position:absolute; background:var(--navy); transition:.4s var(--ease); }
+.acc__plus::before{ width:14px; height:2px; } .acc__plus::after{ width:2px; height:14px; }
+.acc__item.open .acc__plus::before,.acc__item.open .acc__plus::after{ background:#fff; }
+.acc__item.open .acc__plus::after{ transform:rotate(90deg); opacity:0; }
+.acc__panel{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s var(--ease); }
+.acc__item.open .acc__panel{ grid-template-rows:1fr; }
+.acc__panel > div{ overflow:hidden; }
+.acc__panel p{ max-width:70ch; padding:0 0 30px 58px; font-size:16px; line-height:1.75; color:var(--ink-soft); }
+@media (max-width:600px){ .acc__panel p{ padding-left:0; } }
+
+/* ============ CLIENTES (carrusel) ============ */
+.clients{ background:var(--navy-deep); color:#fff; overflow:hidden; }
+.clients .eyebrow{ color:var(--gold); }
+.clients h2{ color:#fff; }
+.carousel{ margin-top:50px; position:relative; }
+.carousel__track{ display:flex; gap:22px; transition:transform .7s var(--ease); }
+.cli-card{ flex:0 0 clamp(280px,33%,420px); background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:34px; min-height:280px; display:flex; flex-direction:column; }
+.cli-card__logo{ height:46px; display:flex; align-items:center; margin-bottom:auto; }
+.cli-card__logo .name{ font-size:26px; font-weight:800; letter-spacing:-.02em; color:#fff; }
+.cli-card__tag{ font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin:24px 0 10px; }
+.cli-card__desc{ font-size:15px; line-height:1.65; color:rgba(255,255,255,.82); }
+.carousel__nav{ display:flex; gap:12px; margin-top:34px; align-items:center; }
+.carousel__btn{ width:50px; height:50px; border-radius:50%; border:1.5px solid rgba(255,255,255,.25); color:#fff; display:flex; align-items:center; justify-content:center; transition:.3s; }
+.carousel__btn:hover{ background:#fff; color:var(--navy); border-color:#fff; }
+.carousel__btn:disabled{ opacity:.3; cursor:not-allowed; }
+.carousel__prog{ flex:1; height:2px; background:rgba(255,255,255,.15); margin-left:14px; position:relative; border-radius:2px; }
+.carousel__prog i{ position:absolute; left:0; top:0; height:100%; background:var(--gold); border-radius:2px; transition:.5s var(--ease); }
+
+/* ============ Teasers a subpáginas ============ */
+.teasers{ background:var(--cream); }
+.teaser-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.teaser{ position:relative; border-radius:16px; overflow:hidden; min-height:360px; display:flex; align-items:flex-end; color:#fff; padding:38px; transition:.5s var(--ease); }
+.teaser .ph{ position:absolute; inset:0; z-index:0; }
+.teaser img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; transition:transform .6s var(--ease); }
+.teaser:hover img{ transform:scale(1.05); }
+.teaser::after{ content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(16,39,64,.15),rgba(16,39,64,.85)); }
+.teaser__body{ position:relative; z-index:2; }
+.teaser h3{ font-size:32px; margin-bottom:8px; }
+.teaser p{ font-size:15px; color:rgba(255,255,255,.85); max-width:34ch; }
+.teaser .go{ display:inline-flex; align-items:center; gap:9px; margin-top:18px; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+.teaser:hover{ transform:translateY(-5px); }
+.teaser:hover .go .arr{ transform:translateX(5px); }
+.teaser .go .arr{ transition:transform .4s var(--ease); }
+@media (max-width:760px){ .teaser-grid{ grid-template-columns:1fr; } }
+
+/* ============ CONTACTO / FOOTER ============ */
+.contact{ background:var(--navy-deep); color:#fff; padding:clamp(80px,12vh,140px) 0 0; }
+.contact h2{ color:#fff; }
+.contact__top{ display:grid; grid-template-columns:1.2fr 1fr; gap:60px; align-items:end; padding-bottom:64px; border-bottom:1px solid rgba(255,255,255,.12); }
+.contact__methods{ display:flex; flex-direction:column; gap:4px; }
+.cmethod{ display:flex; align-items:center; gap:16px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,.1); transition:.3s; }
+.cmethod:hover{ padding-left:8px; }
+.cmethod .ico{ width:42px; height:42px; flex:none; border-radius:50%; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; color:var(--gold); }
+.cmethod .lbl{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.55); }
+.cmethod .val{ font-size:17px; font-weight:600; }
+.contact__bottom{ display:flex; justify-content:space-between; align-items:center; gap:24px; padding:34px 0; flex-wrap:wrap; }
+.social{ display:flex; gap:12px; }
+.social a{ width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; transition:.3s; }
+.social a:hover{ background:#fff; color:var(--navy); border-color:#fff; }
+.contact__brand{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.copy{ font-size:13px; color:rgba(255,255,255,.5); }
+@media (max-width:760px){ .contact__top{ grid-template-columns:1fr; gap:40px; } }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <a href="index.html" class="nav__logo" aria-label="Se + inicio">
+    <span class="nav__mark">
+      <img src="assets/logomark-white.png" class="logo-white" alt="" />
+      <img src="assets/logomark-color.png" class="logo-color" alt="" />
+    </span>
+    <span class="nav__word">Se<b>+</b></span>
+  </a>
+  <nav class="nav__menu" id="menu">
+    <a class="nav__link" href="quienes-somos.html">Quiénes Somos</a>
+    <a class="nav__link" href="#fundamentos">Fundamentos</a>
+    <a class="nav__link" href="#propuesta">Propuesta de Valor</a>
+    <a class="nav__link" href="#servicios">Servicios</a>
+    <a class="nav__link" href="metodo-cemas.html">Método CEMAS</a>
+    <a class="nav__link cta" href="#contacto">Contáctanos</a>
+  </nav>
+  <button class="nav__burger" id="burger" aria-label="Menú"><span></span></button>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" data-screen-label="Hero">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="assets/hero.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero__grad"></div>
+
+  <div class="hero__inner wrap">
+    <span class="eyebrow" style="color:#fff;opacity:.85" data-reveal>Consultoría en 360°</span>
+    <h1 class="display" data-reveal data-d="1">Evolucioná <em>sin perder</em> identidad.</h1>
+    <p class="hero__sub" data-reveal data-d="2">
+      Acompañamos a empresas y organizaciones a alcanzar su versión más rentable y ordenada,
+      con foco comercial y un método que se adapta a vos — no al revés.
+    </p>
+    <div class="hero__cta" data-reveal data-d="3">
+      <a href="#propuesta" class="btn btn--light">Nuestra propuesta <span class="arr">→</span></a>
+      <a href="#fundamentos" class="btn" style="border:1.5px solid rgba(255,255,255,.5);color:#fff;">¿Por qué una consultoría?</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ===================== FUNDAMENTOS ===================== -->
+<section class="section fund" id="fundamentos" data-screen-label="Fundamentos">
+  <div class="fund__bg" data-parallax="0.12">
+    <img src="assets/fundamentos.png" alt="Apretón de manos entre dos profesionales en una reunión corporativa" />
+  </div>
+  <div class="wrap">
+    <span class="eyebrow" data-reveal><span class="num">01</span>Fundamentos</span>
+    <h2 class="h-xl" data-reveal data-d="1">Razones para recurrir a una consultoría comercial</h2>
+    <div class="fund__grid">
+      <div class="reason" data-reveal data-d="1"><span class="reason__n">01</span><span class="reason__t">Para potenciar los resultados comerciales de forma real.</span></div>
+      <div class="reason" data-reveal data-d="1"><span class="reason__n">02</span><span class="reason__t">Para lograr eficiencia sobre el costo aplicado a la gestión comercial.</span></div>
+      <div class="reason" data-reveal data-d="2"><span class="reason__n">03</span><span class="reason__t">Para que directores y propietarios dispongan de más y mejor tiempo para otros desafíos.</span></div>
+      <div class="reason" data-reveal data-d="2"><span class="reason__n">04</span><span class="reason__t">Para lograr un mayor control de la gestión comercial y del recurso humano asignado.</span></div>
+      <div class="reason" data-reveal data-d="3"><span class="reason__n">05</span><span class="reason__t">Para abordar una nueva etapa de crecimiento y expansión.</span></div>
+      <div class="reason" data-reveal data-d="3"><span class="reason__n">06</span><span class="reason__t">Para gestionar adecuadamente una competencia agresiva.</span></div>
+      <div class="reason" data-reveal data-d="4"><span class="reason__n">07</span><span class="reason__t">Para sistematizar de forma customizada la operación comercial (CRM / ERP).</span></div>
+      <div class="reason" data-reveal data-d="4"><span class="reason__n">08</span><span class="reason__t">Para lograr conexión entre áreas y garantizar la sinergia interna.</span></div>
+      <div class="reason" data-reveal data-d="5"><span class="reason__n">09</span><span class="reason__t">Para establecer una estrategia comercial óptima y customizada a la empresa.</span></div>
+      <div class="reason" data-reveal data-d="5"><span class="reason__n">10</span><span class="reason__t">Para reestructurar la organización en relación a nuevos contextos.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CÓMO GESTIONAMOS ===================== -->
+<section class="section gestion" id="gestion" data-screen-label="Cómo gestionamos">
+  <div class="wrap split split--rev">
+    <div>
+      <span class="eyebrow" data-reveal><span class="num">02</span>Cómo gestionamos</span>
+      <h2 class="h-lg" data-reveal data-d="1" style="margin-top:18px;">Cada caso es único. Lo abordamos como tal.</h2>
+      <p class="body" data-reveal data-d="2" style="margin-top:22px;">
+        <b style="color:var(--ink)">Se +</b> se especializa en el acompañamiento a empresas y organizaciones
+        que pretenden lograr la versión más rentable y ordenada de sí mismas. A partir de esa intención,
+        fortalecemos la gestión comercial, entendiéndola como objetivo primario.
+      </p>
+      <p class="body" data-reveal data-d="3" style="margin-top:18px;">
+        Es factible un abordaje directo o indirecto de la tarea; desde allí, y con la voluntad del cliente,
+        gestionamos un desarrollo integral y permanente: analizamos, diagnosticamos y aplicamos
+        cursos de acción adaptados que generan crecimiento comercial y motorizan la operación de modo transversal.
+      </p>
+    </div>
+    <div class="split__media tall" data-reveal data-d="2">
+      <img src="assets/gestion.png" alt="Consultora y cliente revisando un plan estratégico en una oficina con vista a la ciudad" />
+      <span class="float-num">02</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROPUESTA DE VALOR ===================== -->
+<section class="section value" id="propuesta" data-screen-label="Propuesta de valor">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow" data-reveal><span class="num">03</span>Nuestra propuesta de valor</span>
+      <h2 class="h-lg" data-reveal data-d="1" style="margin-top:18px;">Servicios principales · Crecimiento comercial</h2>
+      <p class="lead" data-reveal data-d="2">
+        Somos una consultora con un enfoque eminentemente comercial. La optimización de los resultados de ventas
+        es el motor que posiciona a la organización sobre una base sólida para evolucionar hacia la excelencia integral.
+      </p>
+      <p class="body" data-reveal data-d="3" style="margin-top:14px;color:var(--muted);font-size:14px;">Tocá cada etapa para ver el detalle.</p>
+    </div>
+
+    <div class="pillars">
+      <button class="pillar" data-pillar data-reveal data-d="1">
+        <div class="pillar__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></div>
+        <span class="pillar__step">Paso 01 · Excluyente</span>
+        <h3>Diagnóstico</h3>
+        <p class="pillar__excerpt">El primer paso, condición excluyente para iniciar cualquier gestión de mejora.</p>
+        <div class="pillar__panel"><div><p>
+          La confección y presentación de un diagnóstico profundo y consciente es condición excluyente para iniciar
+          cualquier gestión de mejora. Permite determinar a ciencia cierta dónde estamos, con qué contamos, cuáles son
+          las zonas de dolor crítico y hacia dónde queremos dirigirnos. El análisis puede aplicarse a la organización
+          en su totalidad o circunscribirse a un área específica. Desde aquí, el cliente puede volcarse hacia el
+          régimen directo o indirecto.
+        </p></div></div>
+        <span class="pillar__more">Ver detalle <span class="ico">+</span></span>
+      </button>
+
+      <button class="pillar" data-pillar data-reveal data-d="2">
+        <div class="pillar__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h7l2-4 3 8 2-4h4"/></svg></div>
+        <span class="pillar__step">Opción A · Inmersivo</span>
+        <h3>Abordaje directo</h3>
+        <p class="pillar__excerpt">Tercerización integral: asumimos la dirección completa del área de ventas.</p>
+        <div class="pillar__panel"><div><p>
+          Implica la tercerización del departamento comercial. <b>Se +</b> asume la dirección integral del área de
+          ventas, haciéndonos responsables de la gestión y de todo lo que ello implica, con el staff de la organización
+          o armando un equipo. Acordamos objetivos, definimos indicadores y cadencia de presentaciones, implementamos
+          KPIs y un dashboard de control y procesos. Incluye capacitación y acompañamiento en campo, análisis de mercado
+          y cartera, segmentación, estrategia comercial, plan de negocios y análisis de costos.
+          <span class="note">Convenio de locación de servicio por un período no menor a 8 meses; luego la organización puede conservar la estructura o continuar tercerizándola.</span>
+        </p></div></div>
+        <span class="pillar__more">Ver detalle <span class="ico">+</span></span>
+      </button>
+
+      <button class="pillar" data-pillar data-reveal data-d="3">
+        <div class="pillar__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3.4"/></svg></div>
+        <span class="pillar__step">Opción B · Supervisión</span>
+        <h3>Abordaje indirecto</h3>
+        <p class="pillar__excerpt">Menos inmersivo: potenciamos tu estructura comercial existente.</p>
+        <div class="pillar__panel"><div><p>
+          Un abordaje menos inmersivo: operamos sobre una estructura comercial existente, armando un plan de capacitación
+          y acompañamiento, otorgando herramientas nuevas y maximizando las existentes. Diseñamos un plan de objetivos
+          concreto, con talleres por herramienta, KPIs customizados, segmentación y estudios sectorizados del mercado,
+          y sugerencias de gestión — todo como agentes externos y supervisores del proceso, no como responsables directos.
+          Puede incluir elección y seguimiento de CRM de ser requerido.
+        </p></div></div>
+        <span class="pillar__more">Ver detalle <span class="ico">+</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICIOS COMPLEMENTARIOS ===================== -->
+<section class="section compl" id="servicios" data-screen-label="Servicios complementarios">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow" data-reveal><span class="num">04</span>Servicios complementarios</span>
+      <h2 class="h-lg" data-reveal data-d="1" style="margin-top:18px;">Mantienen la profesionalidad. Comparten el enfoque.</h2>
+    </div>
+
+    <div class="acc" id="acc">
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">01</span><span class="acc__t">Procesos de Gestión</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Mejoramos los procesos existentes para alcanzar altos niveles de eficacia y eficiencia, o bien creamos, diseñamos e implementamos nuevos procesos a la medida de la organización.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">02</span><span class="acc__t">Certificación de Normas</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Prestamos cercano acompañamiento en la certificación de diversas normas. Guiamos y asesoramos para allanar el camino y alcanzar el éxito en ese desafío.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">03</span><span class="acc__t">Estudios de Mercado</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Conocer con certeza en qué mercado se trabaja: segmento, público objetivo, hábitos de consumo, sesgos conductuales y porcentaje de mercado, entre otras variables de altísima importancia. Damos respuesta a cada una de estas inquietudes.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">04</span><span class="acc__t">Análisis de Riesgos</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Ante un escenario fluctuante, con variables oscilantes y poco previsibles, y la creciente necesidad de reinventarse, es preciso conocer los riesgos y cómo abordarlos antes de que apremien.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">05</span><span class="acc__t">Salud del Negocio</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Conocer objetivamente la eficiencia y la salud del negocio como un todo o en cada una de sus partes. Diseñamos e implementamos un tablero de control y medición totalmente customizado que elimina subjetividades.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">06</span><span class="acc__t">Optimización Financiera</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Profesionalización de la gestión financiera, otorgando eficiencia a los recursos y facilitando la toma de decisiones orientada a la mejora de costos.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">07</span><span class="acc__t">Empresas Familiares</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>Estas estructuras cuentan con componentes elevados de emocionalidad en su gestión diaria. Trabajamos para lograr un funcionamiento armonioso y planificamos dentro de ese contexto para garantizar la vida útil de la empresa, sin afectar las relaciones intrafamiliares.</p></div></div>
+      </div>
+      <div class="acc__item" data-reveal>
+        <button class="acc__head"><span class="acc__n">08</span><span class="acc__t">Gestión del RR.HH.</span><span class="acc__plus"></span></button>
+        <div class="acc__panel"><div><p>El modo en que las personas se comportan, se motivan y se gestionan es tan relevante como el diseño y monitoreo de los indicadores comerciales. Lo gestionamos en forma directa; además analizamos, buscamos y seleccionamos talento, bajo el paraguas del cumplimiento de los objetivos planteados.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLIENTES (carrusel) ===================== -->
+<section class="section clients" id="clientes" data-screen-label="Confían en nosotros">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal><span class="num">05</span>Confían en nosotros</span>
+    <h2 class="h-lg" data-reveal data-d="1" style="margin-top:18px;max-width:20ch;">Clientes con los que nos acompañamos mutuamente.</h2>
+
+    <div class="carousel" data-reveal data-d="2">
+      <div class="carousel__track" id="track">
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">Complacer</span></div><span class="cli-card__tag">Conservas gourmet</span><p class="cli-card__desc">Empresa familiar, productora de conservas gourmet de alta calidad, con eje en la comida tradicional, el sabor como núcleo y materias primas seleccionadas.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">Hidrotécnica</span></div><span class="cli-card__tag">Maquinaria industrial</span><p class="cli-card__desc">Especializada en venta, servicios y alquiler de maquinaria industrial de limpieza y sanitización, con alta presencia en Cuyo.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">Hidroplas</span></div><span class="cli-card__tag">Proyectos de riego</span><p class="cli-card__desc">Organización especializada en el diseño e instalación de proyectos de riego, con énfasis en la customización y la eficiencia del proceso.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">Tolin Maquinarias</span></div><span class="cli-card__tag">Equipos de izaje</span><p class="cli-card__desc">Rental, servicios y ventas de equipos de aplicación industrial: izaje, altura, movimiento de suelo y elevación de cargas en diferentes industrias.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">GMO</span></div><span class="cli-card__tag">Transporte</span><p class="cli-card__desc">Especialistas en transporte de cargas varias y pasajeros empresariales, poniendo el acento en la flexibilidad y la orientación al cliente.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">LT Group</span></div><span class="cli-card__tag">Seguros y créditos</span><p class="cli-card__desc">Organización polifacética orientada a seguros y créditos, para personas y empresas, con servicios en Cuyo y atención personalizada.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">Giménez y Asoc.</span></div><span class="cli-card__tag">Estudio jurídico</span><p class="cli-card__desc">Estudio jurídico de amplio espectro, especializado en gestión de minoridad y familia, y gestión civil y comercial.</p></article>
+        <article class="cli-card"><div class="cli-card__logo"><span class="name">Pink Point</span></div><span class="cli-card__tag">Regalos</span><p class="cli-card__desc">Orientada a formar parte de todo momento importante por medio de regalos delicados y con alto contenido emocional.</p></article>
+      </div>
+      <div class="carousel__nav">
+        <button class="carousel__btn" id="prev" aria-label="Anterior">←</button>
+        <button class="carousel__btn" id="next" aria-label="Siguiente">→</button>
+        <span class="carousel__prog"><i id="prog"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TEASERS A SUBPÁGINAS ===================== -->
+<section class="section teasers" data-screen-label="Explorar más">
+  <div class="wrap teaser-grid">
+    <a class="teaser" href="quienes-somos.html" data-reveal>
+      <img src="assets/teaser-quienes.png" alt="Equipo de consultores conversando en una oficina con vista a la ciudad" />
+      <div class="teaser__body">
+        <h3>Quiénes Somos</h3>
+        <p>Nuestros orígenes, misión, visión y los valores que nos guían.</p>
+        <span class="go">Conocer la historia <span class="arr">→</span></span>
+      </div>
+    </a>
+    <a class="teaser" href="metodo-cemas.html" data-reveal data-d="1">
+      <img src="assets/teaser-cemas.png" alt="Manos organizando un diagrama de proceso con notas en una pizarra de vidrio" />
+      <div class="teaser__body">
+        <h3>Método CEMAS</h3>
+        <p>El método propio que ajusta y adapta cada herramienta a tu organización.</p>
+        <span class="go">Ver el método <span class="arr">→</span></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ===================== CONTACTO ===================== -->
+<footer class="contact foot" id="contacto" data-screen-label="Contáctanos">
+  <div class="wrap">
+    <div class="contact__top">
+      <div>
+        <span class="eyebrow" style="color:var(--gold)" data-reveal><span class="num">06</span>Contáctanos</span>
+        <h2 class="h-xl" data-reveal data-d="1" style="margin-top:16px;">Construyamos juntos<br/>la mejor versión.</h2>
+        <a href="mailto:hola@seconsultoria.com.ar" class="btn btn--light" data-reveal data-d="2" style="margin-top:30px;">Escribinos <span class="arr">→</span></a>
+      </div>
+      <div class="contact__methods" data-reveal data-d="2">
+        <a class="cmethod" href="mailto:hola@seconsultoria.com.ar">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span><span class="lbl">Email</span><br/><span class="val">hola@seconsultoria.com.ar</span></span>
+        </a>
+        <a class="cmethod" href="tel:+542644567890">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-3 2a12 12 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></span>
+          <span><span class="lbl">Teléfono</span><br/><span class="val">+54 264 456 7890</span></span>
+        </a>
+        <a class="cmethod" href="https://wa.me/5492644567890">
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21l1.6-4.5A8 8 0 1112 20a8 8 0 01-4.2-1.2L3 21z"/></svg></span>
+          <span><span class="lbl">WhatsApp</span><br/><span class="val">+54 9 264 456 7890</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="contact__bottom">
+      <div class="contact__brand">
+        <div class="foot-logo">
+          <img src="assets/logomark-white.png" alt="Se +" />
+          <span class="w">Se<b>+</b></span>
+        </div>
+        <span class="copy">© 2026 Se + · Consultoría en 360°. San Juan, Argentina.</span>
+      </div>
+      <div class="social">
+        <a href="#" aria-label="Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 014 0v4"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 8h2V5h-2a3 3 0 00-3 3v2H9v3h2v6h3v-6h2l1-3h-3V8a1 1 0 011-1z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

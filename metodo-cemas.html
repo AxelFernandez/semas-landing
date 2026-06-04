@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Método C.E.M.A.S. · Se +</title>
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+.subhero{ position:relative; background:var(--navy-deep); color:#fff; padding:clamp(140px,20vh,210px) 0 clamp(70px,10vh,110px); overflow:hidden; }
+.subhero__orb{ position:absolute; width:46vw; height:46vw; border-radius:50%; background:radial-gradient(circle,#E8722A,transparent 64%); filter:blur(80px); opacity:.3; top:-12vw; left:-6vw; }
+.subhero__orb.b{ background:radial-gradient(circle,#2d5a85,transparent 65%); opacity:.5; left:auto; right:-8vw; top:-16vw; }
+.subhero .wrap{ position:relative; z-index:2; }
+.subhero .crumb{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); display:inline-flex; gap:10px; align-items:center; }
+.subhero .crumb a{ color:rgba(255,255,255,.6); }
+.subhero h1{ margin-top:20px; color:#fff; }
+.subhero h1 .letters{ color:var(--gold); letter-spacing:.04em; }
+.subhero p{ margin-top:22px; max-width:58ch; color:rgba(255,255,255,.82); font-size:clamp(17px,1.4vw,21px); line-height:1.6; }
+/* sigla chips en hero */
+.sigla{ display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; }
+.sigla span{ display:inline-flex; align-items:baseline; gap:8px; padding:10px 16px; border:1px solid rgba(255,255,255,.18); border-radius:100px; font-size:14px; color:rgba(255,255,255,.9); }
+.sigla span b{ color:var(--gold); font-size:18px; font-weight:800; }
+
+/* CONCEPTO RECTOR */
+.concept{ background:var(--white); }
+.concept .split{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(34px,5vw,72px); align-items:start; }
+.concept .col p{ font-size:16px; line-height:1.78; color:var(--ink-soft); margin-bottom:16px; }
+.concept .pull{ font-size:clamp(22px,2.4vw,32px); font-weight:600; letter-spacing:-.02em; line-height:1.32; color:var(--ink); }
+.concept .pull em{ font-style:normal; color:var(--navy); }
+.quote{ margin-top:30px; padding:28px 32px; background:var(--cream); border-radius:14px; border-left:3px solid var(--gold); font-size:17px; line-height:1.6; color:var(--ink); font-style:italic; }
+@media (max-width:860px){ .concept .split{ grid-template-columns:1fr; } }
+
+/* TIMELINE 5 LETRAS */
+.method{ background:var(--cream); }
+.method__intro{ max-width:740px; }
+.tl{ margin-top:60px; position:relative; }
+.tl::before{ content:""; position:absolute; left:60px; top:30px; bottom:30px; width:2px; background:linear-gradient(var(--gold),var(--navy-mid)); }
+.stage{ display:grid; grid-template-columns:120px 1fr; gap:clamp(20px,4vw,54px); padding:30px 0; align-items:start; }
+.stage__letter{ width:120px; height:120px; border-radius:50%; background:var(--white); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:54px; font-weight:800; color:var(--navy); position:relative; z-index:2; transition:.5s var(--ease); letter-spacing:-.02em; }
+.stage.in .stage__letter{ background:var(--navy); color:#fff; border-color:var(--navy); }
+.stage__body{ padding-top:16px; }
+.stage__tag{ font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+.stage h3{ font-size:clamp(24px,3vw,38px); margin:6px 0 12px; letter-spacing:-.02em; }
+.stage p{ max-width:64ch; font-size:16px; line-height:1.72; color:var(--ink-soft); }
+@media (max-width:640px){
+  .tl::before{ left:30px; }
+  .stage{ grid-template-columns:60px 1fr; gap:20px; }
+  .stage__letter{ width:60px; height:60px; font-size:28px; }
+}
+
+/* CÓMO SE APLICA — proceso */
+.apply{ background:var(--white); }
+.steps{ margin-top:56px; counter-reset:step; display:flex; flex-direction:column; gap:16px; }
+.step{ display:grid; grid-template-columns:auto 1fr; gap:24px; padding:30px; background:var(--cream); border-radius:16px; align-items:start; transition:.4s var(--ease); }
+.step:hover{ background:var(--cream-2); }
+.step__n{ counter-increment:step; width:48px; height:48px; flex:none; border-radius:12px; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:800; }
+.step__n::before{ content:counter(step,decimal-leading-zero); }
+.step h3{ font-size:21px; margin-bottom:6px; }
+.step p{ font-size:15.5px; line-height:1.7; color:var(--ink-soft); }
+.step .callout{ display:block; margin-top:14px; font-size:13.5px; line-height:1.55; color:var(--muted); font-style:italic; padding-left:14px; border-left:2px solid var(--line); }
+.chips{ display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+.chips span{ font-size:13.5px; padding:8px 14px; background:var(--white); border:1px solid var(--line); border-radius:100px; color:var(--ink-soft); }
+.chips.out span{ border-color:transparent; background:var(--navy); color:#fff; }
+@media (max-width:560px){ .step{ grid-template-columns:1fr; gap:14px; } }
+
+/* CIERRE */
+.closing{ background:var(--navy-deep); color:#fff; }
+.closing .wrap{ max-width:900px; text-align:center; }
+.closing .eyebrow{ color:var(--gold); }
+.closing h2{ color:#fff; margin-bottom:18px; }
+.closing p{ color:rgba(255,255,255,.82); font-size:clamp(17px,1.4vw,20px); line-height:1.65; margin-inline:auto; max-width:62ch; }
+.closing .btn{ margin-top:32px; }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="index.html" class="nav__logo" aria-label="Se + inicio">
+    <span class="nav__mark"><img src="assets/logomark-white.png" class="logo-white" alt="" /><img src="assets/logomark-color.png" class="logo-color" alt="" /></span>
+    <span class="nav__word">Se<b>+</b></span>
+  </a>
+  <nav class="nav__menu" id="menu">
+    <a class="nav__link" href="quienes-somos.html">Quiénes Somos</a>
+    <a class="nav__link" href="index.html#fundamentos">Fundamentos</a>
+    <a class="nav__link" href="index.html#propuesta">Propuesta de Valor</a>
+    <a class="nav__link" href="index.html#servicios">Servicios</a>
+    <a class="nav__link" href="metodo-cemas.html">Método CEMAS</a>
+    <a class="nav__link cta" href="index.html#contacto">Contáctanos</a>
+  </nav>
+  <button class="nav__burger" id="burger" aria-label="Menú"><span></span></button>
+</header>
+
+<section class="subhero" data-screen-label="CEMAS — hero">
+  <div class="subhero__orb"></div>
+  <div class="subhero__orb b"></div>
+  <div class="wrap">
+    <span class="crumb"><a href="index.html">Inicio</a> / Método CEMAS</span>
+    <h1 class="display" data-reveal data-d="1">Método <span class="letters">C.E.M.A.S.</span></h1>
+    <p data-reveal data-d="2">Un método de gestión que hace hincapié en la organización tal como es. Analiza sus características y customiza el camino para lograr resultados — sin demoler lo que ya funciona.</p>
+    <div class="sigla" data-reveal data-d="3">
+      <span><b>C</b> Customizado</span>
+      <span><b>E</b> Escalonado</span>
+      <span><b>M</b> Modulado</span>
+      <span><b>A</b> Alcanzable</span>
+      <span><b>S</b> Sostenible</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTO RECTOR -->
+<section class="section concept" data-screen-label="Concepto rector">
+  <div class="wrap">
+    <div class="section__head" style="margin-bottom:48px;">
+      <span class="eyebrow" data-reveal>Concepto rector</span>
+      <h2 class="h-lg" data-reveal data-d="1" style="margin-top:16px;">Óptimo para todos. Pero no para todos por igual.</h2>
+    </div>
+    <div class="split">
+      <div class="col">
+        <p class="pull" data-reveal>La mayoría de los métodos de gestión se posan sobre las necesidades de la empresa. No es incorrecto — pero suele ser <em>invasivo</em>, y a veces hasta destructivo.</p>
+        <div class="quote" data-reveal data-d="1">Forzar un esquema es como obligar a usar un calzado de calidad indiscutible, pero que no fue hecho para ese pie. C.E.M.A.S. nace para probar que se puede gestionar con base en lo existente.</div>
+      </div>
+      <div class="col" data-reveal data-d="2">
+        <p>El método procura que emerja un plan de gestión y ajuste óptimo para cada empresa, para cada cultura, para cada organización. Todas las organizaciones son perfectibles, pero deben iniciar sobre una base: un punto de partida que se revele como “el inicio”.</p>
+        <p>Todos podemos aspirar a operar como las grandes — pero es un salto que debe darse de forma sustentable, paulatina y coherente.</p>
+        <p>Partimos de una premisa innegable: si la empresa existe, es porque no todo es nocivo ni descartable. Requiere ajustes y mejoras, y estas pueden aplicarse <b style="color:var(--ink)">sin decapitar la identidad</b> de la organización. Por eso nuestra intención es construir, no demoler.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 LETRAS -->
+<section class="section method" data-screen-label="Método — las 5 nociones">
+  <div class="wrap">
+    <div class="method__intro">
+      <span class="eyebrow" data-reveal>La sigla</span>
+      <h2 class="h-lg" data-reveal data-d="1" style="margin-top:16px;">Cinco nociones íntimamente interrelacionadas.</h2>
+      <p class="lead" data-reveal data-d="2">Las primeras letras de cinco conceptos que, aplicados en conjunto, conforman un mecanismo de gestión que logra resultados sin abolir lo bueno que ya se consiguió.</p>
+    </div>
+
+    <div class="tl">
+      <article class="stage" data-reveal>
+        <div class="stage__letter">C</div>
+        <div class="stage__body">
+          <span class="stage__tag">Noción 01</span>
+          <h3>Customizado</h3>
+          <p>No existen dos organizaciones idénticas: cada una tiene su historia, su origen, sus recursos y su identidad. Por eso no aplicamos una receta única. Tomamos herramientas conocidas, las mezclamos con otras nuevas y las customizamos a la empresa, evitando al máximo el “dolor” innecesario y minimizando la reactividad. Construir, no demoler.</p>
+        </div>
+      </article>
+      <article class="stage" data-reveal>
+        <div class="stage__letter">E</div>
+        <div class="stage__body">
+          <span class="stage__tag">Noción 02</span>
+          <h3>Escalonado</h3>
+          <p>Quemar etapas trae consecuencias negativas a corto plazo. Tras el diagnóstico y el plan de acción, aplicamos lo necesario para alcanzar el siguiente “escalón”, lo consolidamos y recién entonces continuamos. La mejora puede ser continua, pero debe ser sustentable — y cada escalón logrado no se pierde si el programa se detiene.</p>
+        </div>
+      </article>
+      <article class="stage" data-reveal>
+        <div class="stage__letter">M</div>
+        <div class="stage__body">
+          <span class="stage__tag">Noción 03</span>
+          <h3>Modulado</h3>
+          <p>El método se aplica parcial o totalmente, y en cualquier momento de la vida de la organización. Opera sobre la estructura existente: los módulos —también customizados— se incorporan o se quitan según convenga, sin derrumbar lo logrado. Esta cualidad modular es la que otorga la flexibilidad que garantiza la adaptación.</p>
+        </div>
+      </article>
+      <article class="stage" data-reveal>
+        <div class="stage__letter">A</div>
+        <div class="stage__body">
+          <span class="stage__tag">Noción 04 · Medible</span>
+          <h3>Alcanzable</h3>
+          <p>Si es alcanzable, es mensurable; si es mensurable, puede gestionarse y controlarse. En común acuerdo con la empresa establecemos indicadores y un dashboard customizado —pero obligatorio— que ofrece un mapa para saber siempre dónde estamos respecto a la salida y a la llegada, y corregir desvíos a tiempo.</p>
+        </div>
+      </article>
+      <article class="stage" data-reveal>
+        <div class="stage__letter">S</div>
+        <div class="stage__body">
+          <span class="stage__tag">Noción 05 · Sustentable</span>
+          <h3>Sostenible</h3>
+          <p>El método se diseña para sostenerse en el tiempo y aplicarse just in time. No se trata de sacrificar para crecer, sino de reconvertir y mejorar lo existente. Automatizamos e internalizamos los procesos para que pasen a formar parte de la nueva identidad: así, el asesoramiento puede estar o no, sin alterar el desarrollo.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO SE APLICA -->
+<section class="section apply" data-screen-label="Cómo se aplica">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow" data-reveal>Cómo se aplica</span>
+      <h2 class="h-lg" data-reveal data-d="1" style="margin-top:16px;">Del diagnóstico al plan de acción.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-reveal>
+        <div class="step__n"></div>
+        <div>
+          <h3>Explicación del método</h3>
+          <p>Se explica cabalmente el método C.E.M.A.S., sus virtudes y sus fundamentos originarios.</p>
+        </div>
+      </div>
+
+      <div class="step" data-reveal>
+        <div class="step__n"></div>
+        <div>
+          <h3>Primer diagnóstico</h3>
+          <p>No insume más de 6 a 12 horas de trabajo. Ponemos en funcionamiento diversas herramientas para lograr una primera visión cristalina de la realidad:</p>
+          <div class="chips">
+            <span>Formularios y encuestas</span>
+            <span>Sesiones consultivas</span>
+            <span>Análisis de percepción interna y externa</span>
+            <span>Observación pasiva</span>
+            <span>Mistery Collaborator / Agent</span>
+            <span>Análisis de documentación interna</span>
+            <span>Escucha pasiva a dirección y gerencias</span>
+            <span>Armado del diagnóstico</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" data-reveal>
+        <div class="step__n"></div>
+        <div>
+          <h3>Diagnóstico preliminar</h3>
+          <p>Con la información recogida confeccionamos un diagnóstico preliminar que expresa, indefectiblemente:</p>
+          <div class="chips out">
+            <span>Identidad autopercibida</span>
+            <span>Identidad externa</span>
+            <span>Cultura percibida</span>
+            <span>Cultura real</span>
+            <span>Procesos y manuales reales</span>
+            <span>FODA</span>
+            <span>Recursos utilizables</span>
+            <span>Puntos de dolor</span>
+            <span>Mejoras posibles</span>
+          </div>
+          <span class="callout">Esto solo tiene el costo de los viáticos que impliquen las horas de trabajo; no se monetizan puntualmente las horas hombre.</span>
+        </div>
+      </div>
+
+      <div class="step" data-reveal>
+        <div class="step__n"></div>
+        <div>
+          <h3>Presentación a dirección / gerencia</h3>
+          <p>Se presenta el diagnóstico a la dirección y gerencia de la organización.</p>
+        </div>
+      </div>
+
+      <div class="step" data-reveal>
+        <div class="step__n"></div>
+        <div>
+          <h3>Acuerdo del plan de acción</h3>
+          <p>Se acuerda la confección de un plan de acción a medida.</p>
+          <span class="callout">De acordarse el plan y no darse luego la contratación, se devengan costos. Si se avanza con la consultoría, la presentación del plan se descuenta del costo total.</span>
+        </div>
+      </div>
+
+      <div class="step" data-reveal>
+        <div class="step__n"></div>
+        <div>
+          <h3>Confección específica del plan</h3>
+          <p>Profundizamos los detalles de peso y avanzamos en un plan que contempla, entre otras variables:</p>
+          <div class="chips">
+            <span>Diagnóstico definitivo por módulo / área</span>
+            <span>Plan general, modular y customizado</span>
+            <span>Tiempos de ejecución por módulo</span>
+            <span>Recursos existentes y a incorporar</span>
+            <span>Indicadores acordados</span>
+            <span>Horizontes a alcanzar</span>
+            <span>Mecanismos de implementación</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section class="section closing" data-screen-label="Conclusión">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Conclusión</span>
+    <h2 class="h-lg" data-reveal data-d="1">Construir, no demoler.</h2>
+    <p data-reveal data-d="2">Cambiar el enfoque tradicional y hacer hincapié en las características de la organización. Diagnosticar profundamente, planificar concienzudamente y formar acuerdos con la empresa como un todo. De esa cumbre conjunta emergen las herramientas óptimas, los indicadores precisos y las prioridades a ajustar — para lograr los objetivos previstos con los recursos reales con los que se cuenta.</p>
+    <a href="index.html#contacto" class="btn btn--light" data-reveal data-d="3">Aplicar el método a mi empresa <span class="arr">→</span></a>
+  </div>
+</section>
+
+<footer class="contact foot foot--page" data-screen-label="Footer">
+  <div class="wrap">
+    <div class="contact__bottom">
+      <div class="contact__brand">
+        <div class="foot-logo">
+          <img src="assets/logomark-white.png" alt="Se +" />
+          <span class="w">Se<b>+</b></span>
+        </div>
+        <span class="copy">© 2026 Se + · Consultoría en 360°. San Juan, Argentina.</span>
+      </div>
+      <div class="social">
+        <a href="#" aria-label="Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 014 0v4"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>
