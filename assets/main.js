@@ -101,63 +101,68 @@
     const prev = document.getElementById('prev');
     const next = document.getElementById('next');
     const prog = document.getElementById('prog');
-    let index = 0;
+    const originalCards = [...track.children];
+    let x = 0;
+    let lastTs = 0;
+    let paused = false;
+    const speed = 0.045; // px/ms: movimiento constante y suave
 
-    const metrics = () => {
-      const cards = track.children;
-      if (!cards.length) return { step: 0, perView: 1, max: 0 };
-      const cardW = cards[0].getBoundingClientRect().width;
+    originalCards.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.dataset.clone = 'true';
+      track.appendChild(clone);
+    });
+    track.style.transition = 'none';
+
+    const cycleWidth = () => {
+      const firstClone = track.children[originalCards.length];
+      return firstClone ? firstClone.offsetLeft : 0;
+    };
+    const step = () => {
+      const first = originalCards[0];
+      if (!first) return 0;
       const gap = parseFloat(getComputedStyle(track).gap) || 22;
-      const step = cardW + gap;
-      const perView = Math.max(1, Math.round((track.parentElement.clientWidth + gap) / step));
-      const max = Math.max(0, cards.length - perView);
-      return { step, perView, max };
+      return first.getBoundingClientRect().width + gap;
+    };
+    const normalize = () => {
+      const width = cycleWidth();
+      if (!width) return;
+      while (x <= -width) x += width;
+      while (x > 0) x -= width;
+    };
+    const render = () => {
+      const width = cycleWidth();
+      normalize();
+      track.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
+      if (prog && width) prog.style.width = ((Math.abs(x) / width) * 100) + '%';
+      if (prev) prev.disabled = false;
+      if (next) next.disabled = false;
+    };
+    const tick = ts => {
+      if (!lastTs) lastTs = ts;
+      const dt = ts - lastTs;
+      lastTs = ts;
+      if (!paused) x -= speed * dt;
+      render();
+      requestAnimationFrame(tick);
     };
 
-    function update() {
-      const { step, max } = metrics();
-      index = Math.max(0, Math.min(index, max));
-      track.style.transform = 'translateX(' + (-index * step) + 'px)';
-      if (prev) prev.disabled = index <= 0;
-      if (next) next.disabled = index >= max;
-      if (prog) prog.style.width = (max === 0 ? 100 : ((index / max) * 100)) + '%';
-    }
-
-    const nextSlide = () => {
-      const { max } = metrics();
-      index = index >= max ? 0 : index + 1;
-      update();
-    };
-
-    let autoplay = null;
-    const startAutoplay = () => {
-      if (autoplay) return;
-      autoplay = setInterval(nextSlide, 3200);
-    };
-    const stopAutoplay = () => {
-      clearInterval(autoplay);
-      autoplay = null;
-    };
-    const restartAutoplay = () => {
-      stopAutoplay();
-      startAutoplay();
-    };
-
-    if (prev) prev.addEventListener('click', () => { index--; update(); restartAutoplay(); });
-    if (next) next.addEventListener('click', () => { index++; update(); restartAutoplay(); });
-    track.parentElement.addEventListener('mouseenter', stopAutoplay);
-    track.parentElement.addEventListener('mouseleave', startAutoplay);
-    window.addEventListener('resize', update);
-    update();
-    startAutoplay();
+    if (prev) prev.addEventListener('click', () => { x += step(); render(); });
+    if (next) next.addEventListener('click', () => { x -= step(); render(); });
+    track.parentElement.addEventListener('mouseenter', () => { paused = true; });
+    track.parentElement.addEventListener('mouseleave', () => { paused = false; });
+    window.addEventListener('resize', render);
+    render();
+    requestAnimationFrame(tick);
 
     /* swipe */
     let sx = 0;
-    track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; stopAutoplay(); }, { passive: true });
+    track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; paused = true; }, { passive: true });
     track.addEventListener('touchend', e => {
       const dx = e.changedTouches[0].clientX - sx;
-      if (Math.abs(dx) > 50) { index += dx < 0 ? 1 : -1; update(); }
-      startAutoplay();
+      if (Math.abs(dx) > 50) { x += dx < 0 ? -step() : step(); render(); }
+      paused = false;
     }, { passive: true });
   }
 })();
